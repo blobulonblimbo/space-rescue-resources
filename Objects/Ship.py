@@ -43,7 +43,7 @@ class Ship(RoomObject):
             if self.x_speed < 0:
                 self.x_speed += 0.1
         if key[pygame.K_d]:
-            if self.y_speed < 5:
+            if self.x_speed < 5:
                 self.x_speed += 0.1
         else:
             if self.x_speed > 0:
