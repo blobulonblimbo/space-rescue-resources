@@ -15,7 +15,7 @@ class Zork(RoomObject):
         # set image
         image = self.load_image("Zork.png")
         self.set_image(image,135,165)
-        self.y_speed = random.choice([-10,10])
+        self.y_speed = random.choice([-1,1])
 
     def keep_in_room(self):
         """
