@@ -1,5 +1,6 @@
 from GameFrame import RoomObject
 import random
+from Objects.Ship import Ship
 
 class Asteroid(RoomObject):
     """
@@ -23,5 +24,5 @@ class Homing_Asteroid(RoomObject):
         RoomObject.__init__(self, room, x, y)
         image = self.load_image("Zork.png")
         self.set_image(image,50,49)
-        angle = random.randint(135,225)
+        angle = 10
         self.set_direction(angle, 10)

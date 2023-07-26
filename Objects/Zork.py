@@ -20,6 +20,9 @@ class Zork(RoomObject):
 
         asteroid_spawn_time = random.randint(15,150)
         self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
+        homing_asteroid_spawn_time = random.randint(15,150)
+        self.set_timer(homing_asteroid_spawn_time, self.spawn_homing_asteroid)
+        
 
     def keep_in_room(self):
         """
@@ -46,6 +49,12 @@ class Zork(RoomObject):
         Determine what happens to the Dragon on each tick of the game clock
         """
         self.keep_in_room()
+    def spawn_homing_asteroid(self):
+        new_homing_asteroid = Homing_Asteroid(self.room, self.x, self.y + self.height/2)
+        self.room.add_room_object(new_homing_asteroid)
+
+        homing_asteroid_spawn_time = random.randint(15,150)
+        self.set_timer(homing_asteroid_spawn_time, self.spawn_homing_asteroid)
     def spawn_asteroid(self):
         """
         Randomly spawns a new Asteroid
@@ -60,12 +69,7 @@ class Zork(RoomObject):
         asteroid_spawn_time = random.randint(15, 150)
         self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
 
-    def spawn_homing_asteroid(self):
-        new_homing_asteroid = Homing_Asteroid(self.room, self.x, self.y + self.height/2)
-        self.room.add_room_object(new_homing_asteroid)
-
-        homing_asteroid_spawn_time = random.randint(15,150)
-        self.set_timer(homing_asteroid_spawn_time, self.spawn_homing_asteroid)
+    
 
         
 
