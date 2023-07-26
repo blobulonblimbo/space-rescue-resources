@@ -6,6 +6,8 @@ class Globals:
 
     SCREEN_WIDTH = 1280
     SCREEN_HEIGHT = 800
+    Ship_x = 0
+    Ship_y = 0
 
     SCORE = 0
 

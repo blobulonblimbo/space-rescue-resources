@@ -48,6 +48,8 @@ class Ship(RoomObject):
         else:
             if self.x_speed > 0:
                 self.x_speed -= 0.1
+        Globals.Ship_x = self.x
+        Globals.Ship_y = self.y
         
         
         

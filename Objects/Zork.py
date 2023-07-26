@@ -22,6 +22,8 @@ class Zork(RoomObject):
         self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
         homing_asteroid_spawn_time = random.randint(15,150)
         self.set_timer(homing_asteroid_spawn_time, self.spawn_homing_asteroid)
+
+        
         
 
     def keep_in_room(self):

@@ -1,7 +1,6 @@
 from GameFrame import RoomObject
 import random
-from Objects.Ship import Ship
-
+from GameFrame import Globals 
 class Asteroid(RoomObject):
     """
     A class for Zorks danerous obstacles
@@ -24,5 +23,13 @@ class Homing_Asteroid(RoomObject):
         RoomObject.__init__(self, room, x, y)
         image = self.load_image("Zork.png")
         self.set_image(image,50,49)
-        angle = 10
+        angle = random.randint(135,225) 
+        #self.x = Globals.Ship_x
         self.set_direction(angle, 10)
+
+
+        if self.x <= Globals.Ship_x + 200 and self.y != Globals.Ship_y:
+            if self.y > Globals.Ship_y:
+                self.y -= 1000
+            elif self.y < Globals.Ship_y:
+                self.y += 1000
