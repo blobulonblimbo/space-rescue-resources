@@ -30,3 +30,12 @@ class Homing_Asteroid(RoomObject):
 
         def step(self):
             self.y = Globals.Ship_y
+
+class lazers(RoomObject):
+    def __init__(self, room, x, y):
+        RoomObject.__init__(self, room, x, y)
+        image = self.load_image("Zork.png")
+        self.set_image(image,5,10)
+        angle = random.randint(135,225) 
+        #self.x = Globals.Ship_x
+        self.set_direction(0, 10)
