@@ -28,8 +28,5 @@ class Homing_Asteroid(RoomObject):
         self.set_direction(angle, 10)
 
 
-        if self.x <= Globals.Ship_x + 200 and self.y != Globals.Ship_y:
-            if self.y > Globals.Ship_y:
-                self.y -= 1000
-            elif self.y < Globals.Ship_y:
-                self.y += 1000
+        def step(self):
+            self.y = Globals.Ship_y
