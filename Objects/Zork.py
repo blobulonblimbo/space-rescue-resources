@@ -24,13 +24,15 @@ class Zork(RoomObject):
         if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
             self.y_speed *= -1
        
-        if self.x_speed < 3:
+        if self.x_speed < 0:
             self.x_speed += 0.25
-        if self.x_speed > -3:
+        if self.x_speed > 0:
             self.x_speed -= 0.25
         
         if self.x_speed == 0:
             self.x_speed = random.choice([-3,3])
+        if self.x < 1000 or self.x > Globals.SCREEN_WIDTH - self.width:
+            self.x_speed *= -1
            
 
             
