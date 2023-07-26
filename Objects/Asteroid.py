@@ -18,3 +18,10 @@ class Asteroid(RoomObject):
         self.set_image(image,50,49)
         angle = random.randint(135,225)
         self.set_direction(angle, 10)
+class Homing_Asteroid(RoomObject):
+    def __init__(self, room, x, y):
+        RoomObject.__init__(self, room, x, y)
+        image = self.load_image("Zork.png")
+        self.set_image(image,50,49)
+        angle = random.randint(135,225)
+        self.set_direction(angle, 10)

@@ -1,6 +1,6 @@
 from GameFrame import RoomObject, Globals
 import random
-from Objects.Asteroid import Asteroid
+from Objects.Asteroid import Asteroid,Homing_Asteroid
 class Zork(RoomObject):
     """
     A class for the game's antagoist
@@ -54,9 +54,18 @@ class Zork(RoomObject):
         new_asteroid = Asteroid(self.room, self.x, self.y + self.height/2)
         self.room.add_room_object(new_asteroid)
         
-        # reset time for next Asteroid spawn
+        # reset time for next Asteroid spawn\
+        
+
         asteroid_spawn_time = random.randint(15, 150)
         self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
+
+    def spawn_homing_asteroid(self):
+        new_homing_asteroid = Homing_Asteroid(self.room, self.x, self.y + self.height/2)
+        self.room.add_room_object(new_homing_asteroid)
+
+        homing_asteroid_spawn_time = random.randint(15,150)
+        self.set_timer(homing_asteroid_spawn_time, self.spawn_homing_asteroid)
 
         
 
