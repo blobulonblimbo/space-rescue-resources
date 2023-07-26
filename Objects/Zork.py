@@ -1,6 +1,5 @@
 from GameFrame import RoomObject, Globals
 import random
-
 class Zork(RoomObject):
     """
     A class for the game's antagoist
@@ -24,11 +23,16 @@ class Zork(RoomObject):
         """
         if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
             self.y_speed *= -1
-        if self.x_speed > 0 or self.x_speed < 0:
-            if self.x_speed > 0:
-                self.x_speed -= 0.1
-            elif self.x_speed < 0:
-                self.x_speed += 0.1
+       
+        if self.x_speed < 3:
+            self.x_speed += 0.25
+        if self.x_speed > -3:
+            self.x_speed -= 0.25
+        
+        if self.x_speed == 0:
+            self.x_speed = random.choice([-3,3])
+           
+
             
             
     def step(self):
