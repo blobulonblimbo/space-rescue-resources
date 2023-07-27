@@ -48,11 +48,19 @@ class Homing_Asteroid(RoomObject):
 class lazers(RoomObject):
     def __init__(self, room, x, y):
         RoomObject.__init__(self, room, x, y)
-        image = self.load_image("Zork.png")
-        self.set_image(image,5,10)
+        image = self.load_image("bullet1.png")
+        self.set_image(image,20,40)
         #self.x = Globals.Ship_x
         self.set_direction(0, 50)
         self.damage = 10
+        self.listy = 0
     def step(self):
-        if self.x >= Globals.Zork_x -50 and self.y >= Globals.Zork_y - 50:
-            self.room.delete_object(self)
+        if self.x > Globals.Zork_x and self.y >= Globals.Zork_y - 0 and self.y <= Globals.Zork_y + 350:
+            self.listy += 1
+            self.image = self.load_image("bullet2.png")
+            self.set_image(self.image,40,40)
+            Globals.Zork_HP -= self.damage
+            self.x_speed = 0
+            if self.listy > 2:
+                self.room.delete_object(self)
+            
