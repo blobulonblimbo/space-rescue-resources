@@ -1,6 +1,10 @@
+import math
 from GameFrame import RoomObject
 import random
 from GameFrame import Globals 
+Delta = 0
+Alpha = 0
+angular = 0
 class Asteroid(RoomObject):
     """
     A class for Zorks danerous obstacles
@@ -28,8 +32,9 @@ class Homing_Asteroid(RoomObject):
         self.set_direction(angle, 10)
 
 
-        def step(self):
-            self.y = Globals.Ship_y
+    def step(self):
+        self.rotate_to_coordinate(Globals.Ship_x,Globals.Ship_y)
+        #self.set_direction(0,10)
 
 class lazers(RoomObject):
     def __init__(self, room, x, y):
