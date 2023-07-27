@@ -8,7 +8,8 @@ class Globals:
     SCREEN_HEIGHT = 800
     Ship_x = 0
     Ship_y = 0
-
+    Zork_x = 0
+    Zork_y = 0
     SCORE = 0
 
     # - Set the starting number of lives - #

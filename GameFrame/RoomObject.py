@@ -215,3 +215,5 @@ class RoomObject:
 
         self.curr_rotation = 0
         self.rotate(int(angle))
+    def hit(self, damage):
+        self.HP -= damage

@@ -1,7 +1,7 @@
 from GameFrame import Globals, RoomObject
 import pygame
 from Objects.Asteroid import lazers
-
+import time
 class Ship(RoomObject):
     """
     A class for the player's avitar (the Ship)
@@ -19,6 +19,7 @@ class Ship(RoomObject):
 
         # register events
         self.handle_key_events = True
+        self.fire_rate = 0
         
     def key_pressed(self, key):
         """
@@ -49,6 +50,7 @@ class Ship(RoomObject):
         else:
             if self.x_speed > 0:
                 self.x_speed -= 0.1
+    
         if key[pygame.K_SPACE]:
             self.shoot()
         Globals.Ship_x = self.x
@@ -66,6 +68,12 @@ class Ship(RoomObject):
         Determine what happens to the Ship on each click of the game clock
         """
         self.keep_in_room()
+        self.fire_rate += 1
     def shoot(self):
-        new_lazer = lazers(self.room, self.x, self.y + self.height/2)
-        self.room.add_room_object(new_lazer)
+        if self.fire_rate > 10:
+            new_lazer = lazers(self.room, self.x, self.y + self.height/2)
+            self.room.add_room_object(new_lazer)
+            self.fire_rate = 0
+        
+        
+        
