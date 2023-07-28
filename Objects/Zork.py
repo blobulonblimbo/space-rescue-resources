@@ -25,6 +25,7 @@ class Zork(RoomObject):
         self.change = 10
         self.num = 1
         self.x = 1000
+        self.animate = 1
 
 
         
@@ -64,9 +65,17 @@ class Zork(RoomObject):
             self.y_speed = 0
             self.x_speed = 0
             self.num += 1
-            self.image = self.load_image("bullet2.png")
+            
+            if self.num < 100:
+                self.image = self.load_image(f"explosion{self.animate}.png")
+                self.animate += 1
+                self.num = 0
+                if self.animate == 7:
+                    self.animate = 0
+                    self.num = 200
+
             self.set_image(self.image,340,460)
-            if self.num > 20:
+            if self.num >= 200:
                 self.room.delete_object(self)
         #self.rotate_to_coordinate(600,)
         '''if self.change > 10:

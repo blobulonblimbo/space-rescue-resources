@@ -18,10 +18,19 @@ class Asteroid(RoomObject):
         RoomObject.__init__(self, room, x, y)
 
         # set image
-        image = self.load_image("asteroid.png")
+        image = self.load_image("Bomb1.png")
         self.set_image(image,50,49)
         angle = random.randint(135,225)
         self.set_direction(angle, 10)
+        self.listy = 0
+    def step(self):
+        if self.x < Globals.Ship_x + 50 and self.y >= Globals.Ship_y - 100 and self.y <= Globals.Ship_y + 100:
+            self.listy += 1
+            self.image = self.load_image("Bomb2.png")
+            self.set_image(self.image,60,50)
+            self.x_speed = 0
+            if self.listy > 2:
+                self.room.delete_object(self)
 class Homing_Asteroid(RoomObject):
     def __init__(self, room, x, y):
         RoomObject.__init__(self, room, x, y)
@@ -49,7 +58,7 @@ class lazers(RoomObject):
     def __init__(self, room, x, y):
         RoomObject.__init__(self, room, x, y)
         image = self.load_image("bullet1.png")
-        self.set_image(image,20,40)
+        self.set_image(image,30,15)
         #self.x = Globals.Ship_x
         self.set_direction(0, 50)
         self.damage = 10
