@@ -60,6 +60,14 @@ class Zork(RoomObject):
         self.keep_in_room()
         Globals.Zork_x = self.x
         Globals.Zork_y = self.y
+        if Globals.Zork_HP <= 0:
+            self.y_speed = 0
+            self.x_speed = 0
+            self.num += 1
+            self.image = self.load_image("bullet2.png")
+            self.set_image(self.image,340,460)
+            if self.num > 20:
+                self.room.delete_object(self)
         #self.rotate_to_coordinate(600,)
         '''if self.change > 10:
             self.image = self.load_image(f"boss_goo{self.num}.gif")
@@ -88,6 +96,23 @@ class Zork(RoomObject):
 
         asteroid_spawn_time = random.randint(15, 150)
         self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
+
+class Health_Bar(RoomObject):
+    def __init__(self, room, x, y):
+        
+        RoomObject.__init__(self, room, x, y)
+        
+        
+        image = self.load_image("HP.png")
+        self.set_image(image,Globals.Zork_HP,30)
+        self.x = 200
+        self.y = 700
+    def step(self):
+        image = self.load_image("HP.png")
+        if Globals.Zork_HP - 10 > 0:
+            self.set_image(image,Globals.Zork_HP,30)
+        else:
+            self.set_image(image,0,0)
 
 
 

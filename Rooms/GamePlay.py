@@ -1,7 +1,6 @@
 from GameFrame import Level
 from Objects.Ship import Ship
-from Objects.Zork import Zork
-from Objects.Health import Health_Bar
+from Objects.Zork import Zork, Health_Bar
 from GameFrame import Globals
 class GamePlay(Level):
     def __init__(self, screen, joysticks):
