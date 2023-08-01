@@ -2,6 +2,7 @@ import math
 from GameFrame import RoomObject
 import random
 from GameFrame import Globals 
+from Objects import Ship
 Delta = 0
 Alpha = 0
 angular = 0
@@ -23,8 +24,15 @@ class Asteroid(RoomObject):
         angle = random.randint(135,225)
         self.set_direction(angle, 10)
         self.listy = 0
+        self.damage = 1
+    def keep_in_room(self):
+        
+        if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
+            self.y_speed *= -1
+
     def step(self):
-        if self.x < Globals.Ship_x + 50 and self.y >= Globals.Ship_y - 100 and self.y <= Globals.Ship_y + 100:
+        self.keep_in_room()
+        if self.x < Globals.Ship_x + 50 and self.y >= Globals.Ship_y - 50 and self.y <= Globals.Ship_y + 100:
             self.listy += 1
             self.image = self.load_image("Bomb2.png")
             self.set_image(self.image,60,50)
@@ -36,24 +44,18 @@ class Homing_Asteroid(RoomObject):
         RoomObject.__init__(self, room, x, y)
         image = self.load_image("Homing_eye.png")
         self.set_image(image,50,49)
-        angle = random.randint(135,225) 
+        angle = self.curr_rotation
         #self.x = Globals.Ship_x
         self.set_direction(angle, 10)
+    def keep_in_room(self):
+        
+        if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
+            print("J")
 
 
     def step(self):
         self.rotate_to_coordinate(Globals.Ship_x,Globals.Ship_y)
-        '''if self.x >= Globals.Ship_x - 1000 and self.y >= Globals.Ship_y - 600:
-            if self.y < Globals.Ship_y:
-                if self.y_speed < 5:
-                    self.y_speed += 0.25
-            if self.y > Globals.Ship_y:
-                if self.y_speed < -5:
-                    self.y_speed -= 0.25
-            if self.x < Globals.Ship_x:
-                if self.x_speed < -15:
-                    self.x_speed -= 0.25'''
-
+        self.set_direction(self.curr_rotation,10)
 class lazers(RoomObject):
     def __init__(self, room, x, y):
         RoomObject.__init__(self, room, x, y)
@@ -63,6 +65,10 @@ class lazers(RoomObject):
         self.set_direction(0, 50)
         self.damage = 10
         self.listy = 0
+    def keep_in_room(self):
+        
+        if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
+            self.room.delete_object(self)
     def step(self):
         if self.x > Globals.Zork_x and self.y >= Globals.Zork_y - 0 and self.y <= Globals.Zork_y + 350:
             self.listy += 1

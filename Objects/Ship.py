@@ -20,6 +20,7 @@ class Ship(RoomObject):
         # register events
         self.handle_key_events = True
         self.fire_rate = 0
+        self.HP = 3
         
     def key_pressed(self, key):
         """
@@ -69,11 +70,17 @@ class Ship(RoomObject):
         """
         self.keep_in_room()
         self.fire_rate += 1
+        
+        if self.check_collisions() == True:
+            print("J")
+
     def shoot(self):
         if self.fire_rate > 10:
             new_lazer = lazers(self.room, self.x, self.y + self.height/2)
             self.room.add_room_object(new_lazer)
             self.fire_rate = 0
+    def hit(self):
+        self.HP -= 1
         
         
         
