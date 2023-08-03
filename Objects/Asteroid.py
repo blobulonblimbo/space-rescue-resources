@@ -3,6 +3,7 @@ from GameFrame import RoomObject
 import random
 from GameFrame import Globals 
 from Objects import Ship
+import time
 Delta = 0
 Alpha = 0
 angular = 0
@@ -25,6 +26,17 @@ class Asteroid(RoomObject):
         self.set_direction(angle, 10)
         self.listy = 0
         self.damage = 1
+        self.register_collision_object("Ship")
+
+    def handle_collision(self, other, other_type):
+        """
+        Handles the collision events for the Asteroid
+        """
+        
+        if other_type == "Ship":
+            Globals.Ship_HP -= 1
+            if Globals.Ship_HP < 1:
+                self.room.running = False
     def keep_in_room(self):
         
         if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:

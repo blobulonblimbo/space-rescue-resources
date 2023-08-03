@@ -11,6 +11,7 @@ class Globals:
     Zork_x = 0
     Zork_y = 0
     Zork_HP = 1000
+    Ship_HP = 3
     SCORE = 0
 
     # - Set the starting number of lives - #
