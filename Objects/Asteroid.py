@@ -79,19 +79,19 @@ class lazers(RoomObject):
         RoomObject.__init__(self, room, x, y)
         image = self.load_image("bullet1.png")
         self.set_image(image,30,15)
-        #self.x = Globals.Ship_x
         self.set_direction(0, 50)
         self.damage = 10
         self.listy = 0
         self.exploded = False
+        self.register_collision_object("Zork")
+
     def handle_collision(self, other, other_type):
        
         
         if other_type == "Zork":
             if self.exploded == False:
                 self.image = self.load_image("bullet2.png")
-                Globals.Zork_HP -= 1
-                other.HP -= 10
+                Globals.Zork_HP -= 10
                 self.set_image(self.image,40,40)
                 self.exploded = True
                 self.x_speed = 0
@@ -105,7 +105,7 @@ class lazers(RoomObject):
         self.room.delete_object(self)
         
     def step(self):
-        
+
         '''if self.x > Globals.Zork_x and self.y >= Globals.Zork_y - 0 and self.y <= Globals.Zork_y + 350:
             self.listy += 1
             self.image = self.load_image("bullet2.png")
