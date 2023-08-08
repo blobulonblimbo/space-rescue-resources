@@ -26,6 +26,7 @@ class Zork(RoomObject):
         self.num = 1
         self.x = 1000
         self.animate = 1
+        self.HP = 1000
 
 
         

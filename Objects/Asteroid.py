@@ -3,7 +3,6 @@ from GameFrame import RoomObject
 import random
 from GameFrame import Globals 
 from Objects import Ship
-import time
 Delta = 0
 Alpha = 0
 angular = 0
@@ -26,6 +25,7 @@ class Asteroid(RoomObject):
         self.set_direction(angle, 10)
         self.listy = 0
         self.damage = 1
+        self.exploded = False
         self.register_collision_object("Ship")
 
     def handle_collision(self, other, other_type):
@@ -34,23 +34,29 @@ class Asteroid(RoomObject):
         """
         
         if other_type == "Ship":
-            Globals.Ship_HP -= 1
-            if Globals.Ship_HP < 1:
-                self.room.running = False
+            if self.exploded == False:
+                other.HP -= 1
+                self.image = self.load_image("Bomb2.png")
+                self.set_image(self.image,60,50)
+                self.exploded = True
+                self.x_speed = 0
+                self.y_speed = 0
+            self.set_timer(10,self.delete_asteroid)
+            
+            
+            #if Globals.Ship_HP < 1:
+                #self.room.running = False
     def keep_in_room(self):
         
         if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
             self.y_speed *= -1
-
+    def delete_asteroid(self):
+        self.room.delete_object(self)
     def step(self):
         self.keep_in_room()
-        if self.x < Globals.Ship_x + 50 and self.y >= Globals.Ship_y - 50 and self.y <= Globals.Ship_y + 100:
-            self.listy += 1
-            self.image = self.load_image("Bomb2.png")
-            self.set_image(self.image,60,50)
-            self.x_speed = 0
-            if self.listy > 2:
-                self.room.delete_object(self)
+        
+                     
+
 class Homing_Asteroid(RoomObject):
     def __init__(self, room, x, y):
         RoomObject.__init__(self, room, x, y)
@@ -60,7 +66,7 @@ class Homing_Asteroid(RoomObject):
         #self.x = Globals.Ship_x
         self.set_direction(angle, 10)
     def keep_in_room(self):
-        
+        self.room.delete_object(self)
         if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
             print("J")
 
@@ -77,17 +83,36 @@ class lazers(RoomObject):
         self.set_direction(0, 50)
         self.damage = 10
         self.listy = 0
+        self.exploded = False
+    def handle_collision(self, other, other_type):
+       
+        
+        if other_type == "Zork":
+            if self.exploded == False:
+                self.image = self.load_image("bullet2.png")
+                Globals.Zork_HP -= 1
+                other.HP -= 10
+                self.set_image(self.image,40,40)
+                self.exploded = True
+                self.x_speed = 0
+                self.y_speed = 0
+        self.set_timer(10,self.delete_asteroid)
     def keep_in_room(self):
         
         if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
             self.room.delete_object(self)
+    def delete_asteroid(self):
+        self.room.delete_object(self)
+        
     def step(self):
-        if self.x > Globals.Zork_x and self.y >= Globals.Zork_y - 0 and self.y <= Globals.Zork_y + 350:
+        
+        '''if self.x > Globals.Zork_x and self.y >= Globals.Zork_y - 0 and self.y <= Globals.Zork_y + 350:
             self.listy += 1
             self.image = self.load_image("bullet2.png")
             self.set_image(self.image,40,40)
             Globals.Zork_HP -= self.damage
             self.x_speed = 0
             if self.listy > 2:
-                self.room.delete_object(self)
+                self.room.delete_object(self)'''
+        
             

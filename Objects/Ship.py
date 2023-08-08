@@ -1,7 +1,6 @@
 from GameFrame import Globals, RoomObject
 import pygame
 from Objects.Asteroid import lazers
-import time
 class Ship(RoomObject):
     """
     A class for the player's avitar (the Ship)
@@ -70,6 +69,8 @@ class Ship(RoomObject):
         """
         self.keep_in_room()
         self.fire_rate += 1
+        if self.HP < 1:
+            self.room.running = False
         
         if self.check_collisions() == True:
             print("J")
