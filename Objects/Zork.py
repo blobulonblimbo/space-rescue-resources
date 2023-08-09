@@ -1,6 +1,6 @@
 from GameFrame import RoomObject, Globals
 import random
-from Objects.Asteroid import Asteroid,Homing_Asteroid, lazers
+from Objects.Asteroid import Asteroid,Homing_Asteroid, lazers, Rainbow
 class Zork(RoomObject):
     HP = 1000
     """
@@ -22,11 +22,13 @@ class Zork(RoomObject):
         self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
         homing_asteroid_spawn_time = random.randint(15,150)
         self.set_timer(homing_asteroid_spawn_time, self.spawn_homing_asteroid)
+        self.fire = True
         self.change = 10
         self.num = 1
         self.x = 1000
         self.animate = 1
         self.HP = 1000
+        
 
 
         
@@ -66,46 +68,44 @@ class Zork(RoomObject):
             self.y_speed = 0
             self.x_speed = 0
             self.num += 1
+            self.room.delete_object(self)
             
-            if self.num < 100:
-                self.image = self.load_image(f"explosion{self.animate}.png")
-                self.animate += 1
-                self.num = 0
-                if self.animate == 7:
-                    self.animate = 0
-                    self.num = 200
+
+            
+        '''if self.num < 100:
+            self.image = self.load_image(f"explosion{self.animate}.png")
+            self.animate += 1
+            self.num = 0
+            if self.animate == 7:
+                self.animate = 0
+                self.num = 200
 
             self.set_image(self.image,340,460)
             if self.num >= 200:
-                self.room.delete_object(self)
-        #self.rotate_to_coordinate(600,)
-        '''if self.change > 10:
-            self.image = self.load_image(f"boss_goo{self.num}.gif")
-            self.change = 0
-            self.num += 1
-            if self.num '''
-        #self.x = Globals.Ship_x
-        #if self.y > Globals.Ship_y - 200 and self.y  or self.y < Globals.Ship_y + 200:
-            #if self.y > Globals.Ship_y - 200:
+                self.room.delete_object(self)'''
+        
     def spawn_homing_asteroid(self):
-        new_homing_asteroid = Homing_Asteroid(self.room, self.x, self.y + self.height/2)
-        self.room.add_room_object(new_homing_asteroid)
+        if self.boss_phase == 1:
+            new_homing_asteroid = Homing_Asteroid(self.room, self.x, self.y + self.height/2)
+            self.room.add_room_object(new_homing_asteroid)
 
-        homing_asteroid_spawn_time = random.randint(15,150)
-        self.set_timer(homing_asteroid_spawn_time, self.spawn_homing_asteroid)
+            homing_asteroid_spawn_time = random.randint(15,150)
+            self.set_timer(homing_asteroid_spawn_time, self.spawn_homing_asteroid)
     def spawn_asteroid(self):
         """
         Randomly spawns a new Asteroid
         """
         # spawn Asteroid and add to room
-        new_asteroid = Asteroid(self.room, self.x, self.y + self.height/2)
-        self.room.add_room_object(new_asteroid)
-        
-        # reset time for next Asteroid spawn\
-        
+        if self.boss_phase == 1:
+            new_asteroid = Asteroid(self.room, self.x, self.y + self.height/2)
+            self.room.add_room_object(new_asteroid)
+            
+            # reset time for next Asteroid spawn\
+            
 
-        asteroid_spawn_time = random.randint(15, 150)
-        self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
+            asteroid_spawn_time = random.randint(15, 150)
+            self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
+    
 
 class Health_Bar(RoomObject):
     def __init__(self, room, x, y):
