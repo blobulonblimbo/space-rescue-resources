@@ -28,6 +28,7 @@ class Zork(RoomObject):
         self.x = 1000
         self.animate = 1
         self.HP = 1000
+        self.dead = False
         
 
 
@@ -68,40 +69,41 @@ class Zork(RoomObject):
             self.y_speed = 0
             self.x_speed = 0
             self.num += 1
-            self.room.delete_object(self)
             
 
             
-        '''if self.num < 100:
+        if self.num > 50:
             self.image = self.load_image(f"explosion{self.animate}.png")
             self.animate += 1
             self.num = 0
+            self.dead = True
             if self.animate == 7:
                 self.animate = 0
                 self.num = 200
 
             self.set_image(self.image,340,460)
             if self.num >= 200:
-                self.room.delete_object(self)'''
+                Globals.Phase = 2
+                self.room.delete_object(self)
         
     def spawn_homing_asteroid(self):
-        if self.boss_phase == 1:
+        if self.dead == False:
             new_homing_asteroid = Homing_Asteroid(self.room, self.x, self.y + self.height/2)
             self.room.add_room_object(new_homing_asteroid)
 
             homing_asteroid_spawn_time = random.randint(15,150)
             self.set_timer(homing_asteroid_spawn_time, self.spawn_homing_asteroid)
     def spawn_asteroid(self):
-        """
-        Randomly spawns a new Asteroid
-        """
-        # spawn Asteroid and add to room
-        if self.boss_phase == 1:
+        if self.dead == False:
+            """
+            Randomly spawns a new Asteroid
+            """
+            # spawn Asteroid and add to room
             new_asteroid = Asteroid(self.room, self.x, self.y + self.height/2)
             self.room.add_room_object(new_asteroid)
-            
-            # reset time for next Asteroid spawn\
-            
+                
+                # reset time for next Asteroid spawn\
+                
 
             asteroid_spawn_time = random.randint(15, 150)
             self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
