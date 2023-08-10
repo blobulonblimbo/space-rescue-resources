@@ -1,6 +1,8 @@
+
 from GameFrame import RoomObject, Globals
 import random
 from Objects.Asteroid import Asteroid,Homing_Asteroid, lazers, Rainbow
+from Objects.Nyan import Nyan
 class Zork(RoomObject):
     HP = 1000
     """

@@ -84,6 +84,7 @@ class lazers(RoomObject):
         self.listy = 0
         self.exploded = False
         self.register_collision_object("Zork")
+        self.register_collision_object("Nyan")
 
     def handle_collision(self, other, other_type):
        
@@ -91,7 +92,16 @@ class lazers(RoomObject):
         if other_type == "Zork":
             if self.exploded == False:
                 self.image = self.load_image("bullet2.png")
-                Globals.Zork_HP -= 5
+                Globals.Zork_HP -= 500
+                self.set_image(self.image,40,40)
+                self.exploded = True
+                self.x_speed = 0
+                self.y_speed = 0
+        self.set_timer(10,self.delete_asteroid)
+        if other_type == "Nyan":
+            if self.exploded == False:
+                self.image = self.load_image("bullet2.png")
+                Globals.Nyan_HP -= 5000
                 self.set_image(self.image,40,40)
                 self.exploded = True
                 self.x_speed = 0

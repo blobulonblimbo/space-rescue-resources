@@ -28,28 +28,28 @@ class Ship(RoomObject):
         
         if key[pygame.K_w]:
             if self.y_speed > -5:
-                self.y_speed -= 0.1
+                self.y_speed -= 0.2
         else:
             if self.y_speed < 0:
-                self.y_speed += 0.1
+                self.y_speed += 0.2
         if key[pygame.K_s]:
             if self.y_speed < 5:
-                self.y_speed += 0.1
+                self.y_speed += 0.2
         else:
             if self.y_speed > 0:
-                self.y_speed -= 0.1
+                self.y_speed -= 0.2
         if key[pygame.K_a]:
             if self.x_speed > -5:
-                self.x_speed -= 0.1
+                self.x_speed -= 0.2
         else:
             if self.x_speed < 0:
-                self.x_speed += 0.1
+                self.x_speed += 0.2
         if key[pygame.K_d]:
             if self.x_speed < 5:
-                self.x_speed += 0.1
+                self.x_speed += 0.2
         else:
             if self.x_speed > 0:
-                self.x_speed -= 0.1
+                self.x_speed -= 0.2
     
         if key[pygame.K_SPACE]:
             self.shoot()

@@ -13,7 +13,8 @@ class Globals:
     Zork_HP = 1000
     Ship_HP = 3
     SCORE = 0
-    Phase = 1
+    Nyan_HP = 10000
+    Phase = 1    
 
     # - Set the starting number of lives - #
     LIVES = 3
