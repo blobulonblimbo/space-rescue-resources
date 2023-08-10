@@ -98,6 +98,7 @@ class Zork(RoomObject):
             self.set_image(self.image,340,460)
             if self.num >= 200:
                 Globals.Phase = 2
+                self.next_boss()
                 self.room.delete_object(self)
         
     def spawn_homing_asteroid(self):
@@ -121,6 +122,12 @@ class Zork(RoomObject):
 
             asteroid_spawn_time = random.randint(self.rate, self.stage)
             self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
+    def next_boss(self):
+        new_boss = Nyan(self.room, self.x, self.y + self.height/2)
+        self.room.add_room_object(new_boss)
+                    
+                    # reset time for next Asteroid spawn\
+                    
     
         
     

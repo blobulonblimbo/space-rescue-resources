@@ -19,11 +19,12 @@ class Nyan(RoomObject):
         self.set_image(image,340,260)
         self.y_speed = 5
         self.x = 1000
-        self.HP = 10000
+        self.HP = 50
         self.stage = 1
         self.met = 0
         self.yes = False
         self.rate = 50
+        self.wiper = True
         #self.x_speed = random.choice([-3,3])
         
         rainbow_spawn_time = 50
@@ -34,23 +35,31 @@ class Nyan(RoomObject):
 
     def step(self):
         self.keep_in_room()
+        
          
-        if Globals.Phase == 2:
-            self.y = 50
-            self.x = 1000
-            Globals.Phase = 0
-            self.set_timer(15,self.Wiper)
+        
+        self.Wiper()
         if Globals.Nyan_HP <= 0:
             self.room.delete_object(self)
         
     def Wiper(self):
-        self.met = random.choice([0,Globals.SCREEN_HEIGHT - self.height])
-        self.y = self.met
-        if self.y == 0:
-            self.y_speed = 5
-        if self.y == Globals.SCREEN_HEIGHT - self.height:
-            self.y_speed = -5
-        self.rate = 3
+        
+        if self.wiper == True:
+            self.met = random.choice([0,Globals.SCREEN_HEIGHT - self.height])
+            self.y = self.met
+            if self.y == 0:
+                self.y_speed = 5
+            if self.y == Globals.SCREEN_HEIGHT - self.height:
+                self.y_speed = -5
+            self.rate = 3
+            self.wiper = False
+            self.set_timer(300,self.reset)
+        
+    def reset(self):
+        self.wiper = True
+    def reset_rate(self):
+        self.rate = 50
+        
 
         
 
@@ -62,11 +71,12 @@ class Nyan(RoomObject):
             # reset time for next Asteroid spawn\
             
 
-            asteroid_spawn_time = random.randint(2,50)
+            asteroid_spawn_time = random.randint(2,self.rate)
             self.set_timer(asteroid_spawn_time, self.spawn_rainbow)
     def keep_in_room(self):
         if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
             self.y_speed *= -1
+            self.reset_rate()
             self.go = self.y_speed
     
        
