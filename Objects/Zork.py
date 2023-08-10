@@ -29,6 +29,10 @@ class Zork(RoomObject):
         self.animate = 1
         self.HP = 1000
         self.dead = False
+        self.stage = 150
+        self.rate = 75
+        self.arg = True
+        self.trun = True
         
 
 
@@ -69,8 +73,16 @@ class Zork(RoomObject):
             self.y_speed = 0
             self.x_speed = 0
             self.num += 1
+        elif Globals.Zork_HP <= 700 and Globals.Zork_HP > 333:
+            self.stage = 100
+            self.rate = 30
+        elif Globals.Zork_HP <= 500 and Globals.Zork_HP > 200:
+            self.stage = 50
+            self.rate = 15
+        if Globals.Zork_HP < 200:
+            self.stage = 20
+            self.rate = 10
             
-
             
         if self.num > 50:
             self.image = self.load_image(f"explosion{self.animate}.png")
@@ -101,12 +113,14 @@ class Zork(RoomObject):
             # spawn Asteroid and add to room
             new_asteroid = Asteroid(self.room, self.x, self.y + self.height/2)
             self.room.add_room_object(new_asteroid)
-                
-                # reset time for next Asteroid spawn\
-                
+                    
+                    # reset time for next Asteroid spawn\
+                    
 
-            asteroid_spawn_time = random.randint(15, 150)
+            asteroid_spawn_time = random.randint(self.rate, self.stage)
             self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
+    
+        
     
 
 class Health_Bar(RoomObject):

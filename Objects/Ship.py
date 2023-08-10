@@ -14,7 +14,7 @@ class Ship(RoomObject):
         
         # set image
         image = self.load_image("Ship.png")
-        self.set_image(image,100,100)
+        self.set_image(image,60,60)
 
         # register events
         self.handle_key_events = True

@@ -91,7 +91,7 @@ class lazers(RoomObject):
         if other_type == "Zork":
             if self.exploded == False:
                 self.image = self.load_image("bullet2.png")
-                Globals.Zork_HP -= 100
+                Globals.Zork_HP -= 5
                 self.set_image(self.image,40,40)
                 self.exploded = True
                 self.x_speed = 0
