@@ -29,7 +29,7 @@ class Nyan(RoomObject):
         #self.x_speed = random.choice([-3,3])
         
         rainbow_spawn_time = 50
-        bouncing_rainbow_spawn_time = 50
+        bouncing_rainbow_spawn_time = 100
         self.set_timer(rainbow_spawn_time, self.spawn_rainbow)
         self.set_timer(bouncing_rainbow_spawn_time, self.spawn_bouncing_rainbow)
         
@@ -84,7 +84,7 @@ class Nyan(RoomObject):
             # reset time for next Asteroid spawn\
             
 
-            asteroid_spawn_time = random.randint(2,self.rate)
+            asteroid_spawn_time = random.randint(50,100)
             self.set_timer(asteroid_spawn_time, self.spawn_bouncing_rainbow)
     def keep_in_room(self):
         if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:

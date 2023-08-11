@@ -233,7 +233,7 @@ class Bouncing_Rainbow(RoomObject):
         if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
             self.y_speed = -5
             self.check = False
-            self.set_timer(50,self.reset)
+            self.set_timer(100,self.reset)
     def delete_rainbow(self):
         self.room.delete_object(self)
     def step(self):
@@ -248,7 +248,7 @@ class Bouncing_Rainbow(RoomObject):
         if self.check == True:
 
             self.y_speed += 0.2
-        self.x_speed = -1
+        self.x_speed = -3
     def reset(self):
         self.check = True
         
