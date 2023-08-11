@@ -1,6 +1,6 @@
 
 from GameFrame import RoomObject, Globals
-from Objects.Asteroid import Rainbow
+from Objects.Asteroid import Rainbow, Bouncing_Rainbow
 import random
 
 class Nyan(RoomObject):
@@ -25,10 +25,13 @@ class Nyan(RoomObject):
         self.yes = False
         self.rate = 50
         self.wiper = True
+        
         #self.x_speed = random.choice([-3,3])
         
         rainbow_spawn_time = 50
+        bouncing_rainbow_spawn_time = 50
         self.set_timer(rainbow_spawn_time, self.spawn_rainbow)
+        self.set_timer(bouncing_rainbow_spawn_time, self.spawn_bouncing_rainbow)
         
 
 
@@ -36,7 +39,6 @@ class Nyan(RoomObject):
     def step(self):
         self.keep_in_room()
         
-         
         
         self.Wiper()
         if Globals.Nyan_HP <= 0:
@@ -53,7 +55,8 @@ class Nyan(RoomObject):
                 self.y_speed = -5
             self.rate = 3
             self.wiper = False
-            self.set_timer(300,self.reset)
+            self.set_timer(random.randint(300,1000),self.reset)
+    
         
     def reset(self):
         self.wiper = True
@@ -73,6 +76,16 @@ class Nyan(RoomObject):
 
             asteroid_spawn_time = random.randint(2,self.rate)
             self.set_timer(asteroid_spawn_time, self.spawn_rainbow)
+    def spawn_bouncing_rainbow(self):
+        
+            new_bouncing_rainbow = Bouncing_Rainbow(self.room, self.x, self.y + self.height/2)
+            self.room.add_room_object(new_bouncing_rainbow)
+            
+            # reset time for next Asteroid spawn\
+            
+
+            asteroid_spawn_time = random.randint(2,self.rate)
+            self.set_timer(asteroid_spawn_time, self.spawn_bouncing_rainbow)
     def keep_in_room(self):
         if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
             self.y_speed *= -1

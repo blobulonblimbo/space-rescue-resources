@@ -103,7 +103,7 @@ class lazers(RoomObject):
         if other_type == "Zork":
             if self.exploded == False:
                 self.image = self.load_image("bullet2.png")
-                Globals.Zork_HP -= 5
+                Globals.Zork_HP -= 500
                 self.set_image(self.image,40,40)
                 self.exploded = True
                 self.x_speed = 0
@@ -111,7 +111,7 @@ class lazers(RoomObject):
         elif other_type == "Nyan":
             if self.exploded == False:
                 self.image = self.load_image("bullet2.png")
-                Globals.Nyan_HP -= 5
+                Globals.Nyan_HP -= 5000
                 self.set_image(self.image,40,40)
                 self.exploded = True
                 self.x_speed = 0
@@ -189,7 +189,68 @@ class Rainbow(RoomObject):
         self.room.delete_object(self)
     def step(self):
         self.keep_in_room()
+        if self.x < -100:
+            self.room.delete_object(self)
         
-                     
+class Bouncing_Rainbow(RoomObject):
+    """
+    A class for Zorks danerous obstacles
+    """
+    
+    def __init__(self, room, x, y):
+        """
+        Initialise the Asteroid object
+        """
+        # include attributes and methods from RoomObject
+        RoomObject.__init__(self, room, x, y)
+
+        # set image
+        image = self.load_image("rainbow_trail.png")
+        self.set_image(image,150,50)
+        angle = 180
+        self.set_direction(angle, 1)
+        self.damage = 1
+        self.exploded = False
+        self.register_collision_object("Ship")
+        self.big = 1
+        self.check = True
+
+    def handle_collision(self, other, other_type):
+        """
+        Handles the collision events for the Asteroid
+        """
+        
+        if other_type == "Ship":
+            if self.exploded == False:
+                other.HP -= 1
+                
+                self.exploded = True
+            
+            #if Globals.Ship_HP < 1:
+                #self.room.running = False
+    def keep_in_room(self):
+        
+        if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
+            self.y_speed = -5
+            self.check = False
+            self.set_timer(50,self.reset)
+    def delete_rainbow(self):
+        self.room.delete_object(self)
+    def step(self):
+        self.keep_in_room()
+        if self.x < -100:
+            self.room.delete_object(self)
+        self.angle += self.big
+        if self.angle >= 360:
+            self.big = -5
+        self.rotate_to_coordinate(self.angle,self.angle)
+        self.x_speed = -10
+        if self.check == True:
+
+            self.y_speed += 0.2
+        self.x_speed = -1
+    def reset(self):
+        self.check = True
+        
         
             
