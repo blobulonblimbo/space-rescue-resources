@@ -25,6 +25,9 @@ class Nyan(RoomObject):
         self.yes = False
         self.rate = 50
         self.wiper = True
+        self.xsp = Globals.SCREEN_HEIGHT + 100
+        self.ysp = Globals.SCREEN_WIDTH / 2
+        self.custom_rate = 2
         
         #self.x_speed = random.choice([-3,3])
         
@@ -32,18 +35,21 @@ class Nyan(RoomObject):
         bouncing_rainbow_spawn_time = 100
         self.set_timer(rainbow_spawn_time, self.spawn_rainbow)
         self.set_timer(bouncing_rainbow_spawn_time, self.spawn_bouncing_rainbow)
+        custom_rainbow_spawn_time = 1
+        self.set_timer(custom_rainbow_spawn_time, self.spawn_rainbow_custom)
+        self.cust = True
         
 
 
 
     def step(self):
         self.keep_in_room()
-        
-        
+        #self.round_drop()
+        self.set_timer(100,self.round_drop)
         self.Wiper()
         if Globals.Nyan_HP <= 0:
             self.room.delete_object(self)
-        
+                
     def Wiper(self):
         
         if self.wiper == True:
@@ -84,12 +90,25 @@ class Nyan(RoomObject):
             # reset time for next Asteroid spawn\
             
 
-            asteroid_spawn_time = random.randint(50,100)
+            asteroid_spawn_time = random.randint(150,200)
             self.set_timer(asteroid_spawn_time, self.spawn_bouncing_rainbow)
     def keep_in_room(self):
         if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
             self.y_speed *= -1
             self.reset_rate()
             self.go = self.y_speed
-    
+    def spawn_rainbow_custom(self):
+        new_custom_rainbow = Rainbow(self.room, self.xsp, self.ysp + self.height/2)
+        self.room.add_room_object(new_custom_rainbow)
+                
+                # reset time for next Asteroid spawn\
+                
+
+        custom_rainbow_spawn_time = random.randint(self.rate / 2,self.custom_rate)
+        self.set_timer(custom_rainbow_spawn_time, self.spawn_rainbow_custom)
+    def round_drop(self):
+        if self.cust == True:
+            self.cust = False
+        elif self.cust == False:
+            self.cust = True
        
