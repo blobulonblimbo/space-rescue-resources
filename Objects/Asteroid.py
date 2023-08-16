@@ -267,11 +267,12 @@ class Custom_Rainbow(RoomObject):
         image = self.load_image("rainbow_trail.png")
         self.set_image(image,150,50)
         angle = 90
-        self.set_direction(angle, 10)
+        self.set_direction(angle, 0)
         self.damage = 1
         self.exploded = False
         self.register_collision_object("Ship")
         self.rotate(90)
+        self.cust = True
 
     def handle_collision(self, other, other_type):
         """
@@ -286,16 +287,27 @@ class Custom_Rainbow(RoomObject):
             
             #if Globals.Ship_HP < 1:
                 #self.room.running = False
-    def keep_in_room(self):
-        
-        if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
-            self.y_speed *= -1
+    
     def delete_rainbow(self):
         self.room.delete_object(self)
     def step(self):
-        self.keep_in_room()
+        if self.y_speed != 10 and self.cust == True:
+            self.y_speed += 0.2
+        if self.y_speed == 10:
+            self.set_timer(1,self.truth)
+        
+        if self.cust == False and self.y_speed != 0:
+            self.y_speed -= 0.2
+        if self.y_speed == 0:
+            self.set_timer(1,self.truth)
+
         if self.x < -100:
             self.room.delete_object(self)
+    def truth(self):
+        if self.cust == True:
+            self.cust = False
+        if self.cust == False:
+            self.cust = True
         
         
             

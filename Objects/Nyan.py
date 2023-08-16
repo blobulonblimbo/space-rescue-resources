@@ -28,6 +28,7 @@ class Nyan(RoomObject):
         self.xsp = Globals.SCREEN_HEIGHT + 100
         self.ysp = Globals.SCREEN_WIDTH / 2
         self.custom_rate = 2
+        self.on = 1
         
         #self.x_speed = random.choice([-3,3])
         
@@ -45,7 +46,10 @@ class Nyan(RoomObject):
     def step(self):
         self.keep_in_room()
         #self.round_drop()
-        self.falls()
+        if self.on == 1:
+            self.falls()
+            self.on = 2
+            self.custom_rate = 1000
         
         self.Wiper()
         if Globals.Nyan_HP <= 0:
@@ -100,7 +104,7 @@ class Nyan(RoomObject):
             self.go = self.y_speed
     def spawn_rainbow_custom(self):
         if self.cust == True:
-            new_custom_rainbow = Custom_Rainbow(self.room, self.x - 200, self.y)
+            new_custom_rainbow = Custom_Rainbow(self.room, self.x - 200, -0)
             self.room.add_room_object(new_custom_rainbow)
                     
                     # reset time for next Asteroid spawn\
