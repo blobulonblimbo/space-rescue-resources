@@ -251,6 +251,51 @@ class Bouncing_Rainbow(RoomObject):
         self.x_speed = -3
     def reset(self):
         self.check = True
+class Custom_Rainbow(RoomObject):
+    """
+    A class for Zorks danerous obstacles
+    """
+    
+    def __init__(self, room, x, y):
+        """
+        Initialise the Asteroid object
+        """
+        # include attributes and methods from RoomObject
+        RoomObject.__init__(self, room, x, y)
+
+        # set image
+        image = self.load_image("rainbow_trail.png")
+        self.set_image(image,150,50)
+        angle = 90
+        self.set_direction(angle, 10)
+        self.damage = 1
+        self.exploded = False
+        self.register_collision_object("Ship")
+        self.rotate(90)
+
+    def handle_collision(self, other, other_type):
+        """
+        Handles the collision events for the Asteroid
+        """
+        
+        if other_type == "Ship":
+            if self.exploded == False:
+                other.HP -= 1
+                
+                self.exploded = True
+            
+            #if Globals.Ship_HP < 1:
+                #self.room.running = False
+    def keep_in_room(self):
+        
+        if self.y < 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
+            self.y_speed *= -1
+    def delete_rainbow(self):
+        self.room.delete_object(self)
+    def step(self):
+        self.keep_in_room()
+        if self.x < -100:
+            self.room.delete_object(self)
         
         
             

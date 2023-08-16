@@ -13,7 +13,6 @@ pygame.joystick.init()
 joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
 for joystick in joysticks:
     joystick.init()
-
 pygame.display.set_caption(Globals.window_name)
 window_size = (Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT)
 screen = pygame.display.set_mode(window_size,

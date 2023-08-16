@@ -1,6 +1,6 @@
 
 from GameFrame import RoomObject, Globals
-from Objects.Asteroid import Rainbow, Bouncing_Rainbow
+from Objects.Asteroid import Rainbow, Bouncing_Rainbow, Custom_Rainbow
 import random
 
 class Nyan(RoomObject):
@@ -45,7 +45,8 @@ class Nyan(RoomObject):
     def step(self):
         self.keep_in_room()
         #self.round_drop()
-        self.set_timer(100,self.round_drop)
+        self.falls()
+        
         self.Wiper()
         if Globals.Nyan_HP <= 0:
             self.room.delete_object(self)
@@ -98,17 +99,23 @@ class Nyan(RoomObject):
             self.reset_rate()
             self.go = self.y_speed
     def spawn_rainbow_custom(self):
-        new_custom_rainbow = Rainbow(self.room, self.xsp, self.ysp + self.height/2)
-        self.room.add_room_object(new_custom_rainbow)
-                
-                # reset time for next Asteroid spawn\
-                
+        if self.cust == True:
+            new_custom_rainbow = Custom_Rainbow(self.room, self.x - 200, self.y)
+            self.room.add_room_object(new_custom_rainbow)
+                    
+                    # reset time for next Asteroid spawn\
+                    
 
-        custom_rainbow_spawn_time = random.randint(self.rate / 2,self.custom_rate)
-        self.set_timer(custom_rainbow_spawn_time, self.spawn_rainbow_custom)
+            custom_rainbow_spawn_time = self.custom_rate
+            self.set_timer(custom_rainbow_spawn_time, self.spawn_rainbow_custom)
     def round_drop(self):
         if self.cust == True:
             self.cust = False
         elif self.cust == False:
             self.cust = True
+    def falls(self):
+        self.custom_rate = 2
+    def pip(self):
+        self.xsp = Globals.SCREEN_HEIGHT + 100
+        self.ysp = Globals.SCREEN_WIDTH / 2
        
