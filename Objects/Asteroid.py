@@ -293,6 +293,7 @@ class Custom_Rainbow(RoomObject):
     def step(self):
         if self.y_speed != 10 and self.cust == True:
             self.y_speed += 0.2
+            print(self.y_speed)
         if self.y_speed == 10:
             self.set_timer(1,self.truth)
         
